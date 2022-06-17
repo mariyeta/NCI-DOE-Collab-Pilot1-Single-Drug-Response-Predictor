@@ -328,6 +328,10 @@ def run(gParameters):
     model.summary()
     benchmark.logger.debug('Model: {}'.format(model.to_json()))
 
+    model_json = model.to_json()
+    with open(gParameters['output_dir']+'.model'+ext+'.json', 'w') as model_f:
+        print(model_json, file=model_f)
+
     train_gen = benchmark.DataGenerator(loader, batch_size=gParameters['batch_size'], shape=gen_shape, name='train_gen', cell_noise_sigma=gParameters['cell_noise_sigma']).flow()
     val_gen = benchmark.DataGenerator(loader, partition='val', batch_size=gParameters['batch_size'], shape=gen_shape, name='val_gen').flow()
     val_gen2 = benchmark.DataGenerator(loader, partition='val', batch_size=gParameters['batch_size'], shape=gen_shape, name='val_gen2').flow()
